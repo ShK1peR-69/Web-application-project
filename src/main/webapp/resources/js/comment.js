@@ -6,15 +6,15 @@
 $(function () {
     $('#addComment').on("click", function () {
         event.preventDefault();
-        var comment = ($("#commentText").val()).toString();
+        let comment = ($("#commentText").val()).toString();
         if (/[^\s]/gim.test(comment)) {
             $("#commentText").css("border", "0.8pt solid rgba(180, 180, 180, 0.75)");
             $("#comment-error").text("");
             event.preventDefault();
-            var article_id = $("#article_id").text();
-            var parts = comment.split("\n");
-            var edit_comment = "";
-            for (var i = 0; i < parts.length; i++) {
+            let article_id = $("#article_id").text();
+            let parts = comment.split("\n");
+            let edit_comment = "";
+            for (let i = 0; i < parts.length; i++) {
                 edit_comment = edit_comment + parts[i] + "<br/>";
             }
             $.ajax({

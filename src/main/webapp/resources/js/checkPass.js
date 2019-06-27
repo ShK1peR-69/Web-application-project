@@ -4,8 +4,8 @@
   */
 
 $('#second_pass').on("keyup", function () {
-    var value_input1 = $('#first_pass').val();
-    var value_input2 = $(this).val();
+    let value_input1 = $('#first_pass').val();
+    let value_input2 = $(this).val();
 
     if (value_input1 !== value_input2) {
         $(".error").html("Пароли не совпадают").css("display", "block");
@@ -22,8 +22,8 @@ $('#second_pass').on("keyup", function () {
 });
 
 $('#first_pass').on("keyup", function () {
-    var value_input1 = $('#second_pass').val();
-    var value_input2 = $(this).val();
+    let value_input1 = $('#second_pass').val();
+    let value_input2 = $(this).val();
 
     if (value_input1 !== value_input2) {
         $(".error").html("Пароли не совпадают").css("display", "block");

@@ -5,9 +5,8 @@
 
 $('#changePassword').on("click", function () {
         event.preventDefault();
-
-        var old_pass = ($("#old_pass").val()).toString();
-        var new_pass = ($("#new_pass").val()).toString();
+        let old_pass = ($("#old_pass").val()).toString();
+        let new_pass = ($("#new_pass").val()).toString();
         if (/[^\s]/gim.test(old_pass)) {
             $("#old_pass").css("border", "0.05rem solid #2b57ff");
             $("#old_pass_error").text('').css("display", "none");

@@ -5,7 +5,7 @@
 
 $('.delete-article-true').on("click", function () {
     event.preventDefault();
-    var article_id = $('#delete-article-id').text().toString();
+    let article_id = $('#delete-article-id').text().toString();
     $.ajax({
         type: "POST",
         url: "/admin/article/delete/" + article_id,

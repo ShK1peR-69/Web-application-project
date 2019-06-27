@@ -5,7 +5,7 @@
 
 $('#mail_input').change(function () {
     event.preventDefault();
-    var email = $('#mail_input').val();
+    let email = $('#mail_input').val();
     $.ajax({
         type: "POST",
         url: "/check-mail",

@@ -5,20 +5,20 @@
 
 $('#article-content').on("keyup", function () {
     event.preventDefault();
-    var imgUrl = ($("#article-content").val()).toString();
-    var pat_img_url = /^(http|https):\/\/([/a-zA-Z0-9_.%\-=]+).(jpg|png|jpeg|gif)$/i;
-    var pat_tube = /^(http|https):\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]{11})$/i;
-    var pat_vk = /^(http|https):\/\/vk\.com\/([a-zA-Z0-9_-]+)\?z=photo([&%a-zA-Z0-9_\-]+)$/i;
-    var pat_inst = /^(http|https):\/\/www\.instagram\.com\/[/a-zA-Z0-9%&_\-]+$/i;
+    let imgUrl = ($("#article-content").val()).toString();
+    let pat_img_url = /^(http|https):\/\/([/a-zA-Z0-9_.%\-=]+).(jpg|png|jpeg|gif)$/i;
+    let pat_tube = /^(http|https):\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]{11})$/i;
+    let pat_vk = /^(http|https):\/\/vk\.com\/([a-zA-Z0-9_-]+)\?z=photo([&%a-zA-Z0-9_\-]+)$/i;
+    let pat_inst = /^(http|https):\/\/www\.instagram\.com\/[/a-zA-Z0-9%&_\-]+$/i;
     if (pat_img_url.test(imgUrl) ||
         pat_tube.test(imgUrl) || pat_inst.test(imgUrl) || pat_vk.test(imgUrl)) {
         $("#article-content").css("border", "0.05rem solid #2b57ff");
         $("#error-url").css("display", "none");
         $("#saveArticle").prop("disabled", false);
         $("#file-input").prop("disabled", true);
-        var vkPat = /^(http|https):\/\/vk\.com[\S]+$/i;
-        var instagramPat = /^(http|https):\/\/www\.instagram\.com[\S]+$/i;
-        var youtubePat = /^(http|https):\/\/www\.youtube\.com\/watch[\S]+$/i;
+        let vkPat = /^(http|https):\/\/vk\.com[\S]+$/i;
+        let instagramPat = /^(http|https):\/\/www\.instagram\.com[\S]+$/i;
+        let youtubePat = /^(http|https):\/\/www\.youtube\.com\/watch[\S]+$/i;
         if (vkPat.test(imgUrl)) {
             $("#article-content").css("border", "0.05rem solid #2b57ff");
             $("#error-url").css("display", "none");
@@ -28,7 +28,7 @@ $('#article-content').on("keyup", function () {
                 url: "/api/vk",
                 data: {"photo": imgUrl},
                 success: function (data) {
-                    var info = JSON.parse(data);
+                    let info = JSON.parse(data);
                     $("#article-content").css("border", "0.05rem solid #2b57ff");
                     $("#error-url").css("display", "block")
                         .css("color", "black")
@@ -58,7 +58,7 @@ $('#article-content').on("keyup", function () {
                 url: "/api/instagram",
                 data: {"media": imgUrl},
                 success: function (data) {
-                    var info = JSON.parse(data);
+                    let info = JSON.parse(data);
                     $("#article-content").css("border", "0.05rem solid #2b57ff");
                     $("#error-url").css("display", "block")
                         .css("color", "black")
@@ -95,7 +95,7 @@ $('#article-content').on("keyup", function () {
                 url: "/api/youtube",
                 data: {"video": imgUrl},
                 success: function (data) {
-                    var info = JSON.parse(data);
+                    let info = JSON.parse(data);
                     $("#article-content").css("border", "0.05rem solid #2b57ff");
                     $("#error-url").css("display", "block")
                         .css("color", "black")
@@ -136,8 +136,8 @@ $('#article-content').on("keyup", function () {
 });
 
 $('#saveArticle').on("click", function () {
-        var title = $("#new-article-title");
-        var text = $("#new-article-text");
+        let title = $("#new-article-title");
+        let text = $("#new-article-text");
         if ((/[^\s]/gim.test(title.val())) && (title.val().length >= 10)) {
             title.css("border", "0.05rem solid #2b57ff");
             $("#title-input-error").text('').css("display", "none");
