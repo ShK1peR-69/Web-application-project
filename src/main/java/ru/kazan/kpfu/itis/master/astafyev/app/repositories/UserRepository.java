@@ -1,12 +1,12 @@
-package ru.kazan.kpfu.itis.master.astafyev.app.controllers.repositories;
+package ru.kazan.kpfu.itis.master.astafyev.app.repositories;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.Article;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.Comment;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.User;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.Article;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.Comment;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
 
 import java.util.List;
 

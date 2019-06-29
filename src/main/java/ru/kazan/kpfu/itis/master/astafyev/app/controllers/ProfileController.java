@@ -7,9 +7,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.User;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.services.ArticleService;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.services.UserService;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
+import ru.kazan.kpfu.itis.master.astafyev.app.services.ArticleService;
+import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
 import ru.kazan.kpfu.itis.master.astafyev.app.security.MyUserDetail;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 

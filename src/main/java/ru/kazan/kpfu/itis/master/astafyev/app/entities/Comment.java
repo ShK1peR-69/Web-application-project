@@ -1,4 +1,4 @@
-package ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities;
+package ru.kazan.kpfu.itis.master.astafyev.app.entities;
 
 import javax.persistence.*;
 

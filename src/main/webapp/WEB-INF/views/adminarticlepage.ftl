@@ -103,7 +103,9 @@
             <#else>
                 <div class="none-articles"> Статья не надйена. <br> Приносим свои извинения</div>
             </#if>
-
+            <div class="up-button" id="toTop">
+                <img src="/resources/images/upButton-img.jpg" alt="Вверх">
+            </div>
         </div>
     </section>
 
@@ -128,10 +130,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="up-button" id="toTop">
-        <img src="/resources/images/upButton-img.jpg" alt="Вверх">
     </div>
 
     <script type="text/javascript" src="../../resources/js/deleteArticle.js"></script>

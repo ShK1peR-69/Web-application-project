@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.api.ApiVKController;
+import ru.kazan.kpfu.itis.master.astafyev.app.api.ApiVKController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -74,6 +74,7 @@ public class Methods {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert response != null;
         return new JSONObject(EntityUtils.toString(response.getEntity()));
     }
 
@@ -101,7 +102,7 @@ public class Methods {
         return source;
     }
 
-    public static String getVKImageURL(JSONObject url) throws IOException {
+    public static String getVKImageURL(JSONObject url){
         String imageURL = "";
         JSONArray jsonArray = url.getJSONArray("response").
                 getJSONObject(0).getJSONArray("sizes");
@@ -112,17 +113,6 @@ public class Methods {
             }
         }
         return imageURL;
-    }
-
-    public static String getVKSourceForNewArticle(String content) throws IOException {
-
-        String photo = "photos=" + ApiVKController.cutPhotoIdFromURL(content);
-        content = getVKImageURL(getRequestResultByURL(
-                AccessVariablesForAPI.VK_MAIN_URL_ADDRESS +
-                        AccessVariablesForAPI.VK_API_METHOD + photo +
-                        AccessVariablesForAPI.VK_ACCESS_TOKEN_HEADER +
-                        AccessVariablesForAPI.VK_ACCESS_TOKEN));
-        return content;
     }
 
     public static String returnNameOfArticleSource(String source, String content) throws IOException {
@@ -147,5 +137,16 @@ public class Methods {
             path += path_parts[i] + "/";
         }
         return path;
+    }
+
+    private static String getVKSourceForNewArticle(String content) throws IOException {
+
+        String photo = "photos=" + ApiVKController.cutPhotoIdFromURL(content);
+        content = getVKImageURL(getRequestResultByURL(
+                AccessVariablesForAPI.VK_MAIN_URL_ADDRESS +
+                        AccessVariablesForAPI.VK_API_METHOD + photo +
+                        AccessVariablesForAPI.VK_ACCESS_TOKEN_HEADER +
+                        AccessVariablesForAPI.VK_ACCESS_TOKEN));
+        return content;
     }
 }

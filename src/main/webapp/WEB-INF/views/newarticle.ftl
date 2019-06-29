@@ -85,15 +85,16 @@
                     <button class="profile-block-button" id="saveArticle">Сохранить</button>
                 </form>
             </div>
+            <div class="up-button" id="toTop">
+                <img src="/resources/images/upButton-img.jpg" alt="Вверх">
+            </div>
         </div>
-
+        <div class="up-button" id="toTop">
+            <img src="/resources/images/upButton-img.jpg" alt="Вверх">
+        </div>
     </section>
 
     <#include "templates/footer.ftl"/>
-
-    <div class="up-button" id="toTop">
-        <img src="/resources/images/upButton-img.jpg" alt="Вверх">
-    </div>
 
     <script type="text/javascript" src="../../resources/js/checkInputsForNewArticle.js"></script>
     <script type="text/javascript" src="../../resources/js/download-file.js"></script>

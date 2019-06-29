@@ -112,15 +112,13 @@
                     <button class="registration-block-button" type="submit">Зарегистрироваться</button>
                 </form>
             </div>
-
+            <div class="up-button" id="toTop">
+                <img src="/resources/images/upButton-img.jpg" alt="Вверх">
+            </div>
         </div>
     </section>
 
     <#include "templates/footer.ftl"/>
-
-    <div class="up-button" id="toTop">
-        <img src="/resources/images/upButton-img.jpg" alt="Вверх">
-    </div>
 
 </div>
 

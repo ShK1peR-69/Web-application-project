@@ -75,9 +75,9 @@
             <div class="profile-block">
                 <div class="profile-block-info">
                     <#if user?? && user?has_content>
-                        <div class="profile-block-div">Имя: ${user.getName()}</div> <#--${first_name}-->
-                        <div class="profile-block-div">Фамилия: ${user.getSecondName()}</div>
-                        <div class="profile-block-div">E-mail: ${user.getEmail()}</div>
+                        <div class="profile-block-div"><b>Имя:</b>&nbsp;${user.getName()}</div> <#--${first_name}-->
+                        <div class="profile-block-div"><b>Фамилия:</b>&nbsp;${user.getSecondName()}</div>
+                        <div class="profile-block-div"><b>E-mail:</b>&nbsp;${user.getEmail()}</div>
                     </#if>
                     <div class="margin-div">
                         <label class="profile-label">
@@ -118,15 +118,13 @@
                     </@sec.authorize>
                 </div>
             </div>
-
+            <div class="up-button" id="toTop">
+                <img src="/resources/images/upButton-img.jpg" alt="Вверх">
+            </div>
         </div>
     </section>
 
     <#include "templates/footer.ftl"/>
-
-    <div class="up-button" id="toTop">
-        <img src="/resources/images/upButton-img.jpg" alt="Вверх">
-    </div>
 
     <script type="text/javascript" src="../../resources/js/changePassword.js"></script>
 

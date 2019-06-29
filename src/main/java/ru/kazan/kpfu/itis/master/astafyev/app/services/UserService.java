@@ -1,10 +1,10 @@
-package ru.kazan.kpfu.itis.master.astafyev.app.controllers.services;
+package ru.kazan.kpfu.itis.master.astafyev.app.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.User;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.repositories.UserRepository;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
+import ru.kazan.kpfu.itis.master.astafyev.app.repositories.UserRepository;
 
 import java.util.List;
 

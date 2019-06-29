@@ -1,4 +1,4 @@
-package ru.kazan.kpfu.itis.master.astafyev.app.controllers.api;
+package ru.kazan.kpfu.itis.master.astafyev.app.api;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

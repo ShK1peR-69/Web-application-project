@@ -6,11 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.Article;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.Comment;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.services.ArticleService;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.services.CommentService;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.services.UserService;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.Article;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.Comment;
+import ru.kazan.kpfu.itis.master.astafyev.app.services.ArticleService;
+import ru.kazan.kpfu.itis.master.astafyev.app.services.CommentService;
+import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
 import ru.kazan.kpfu.itis.master.astafyev.app.security.MyUserDetail;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 

@@ -12,8 +12,8 @@
            http://www.springframework.org/schema/tx
            http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-    <context:component-scan base-package="ru.kazan.kpfu.itis.master.astafyev.app.controllers.repositories"/>
-    <context:component-scan base-package="ru.kazan.kpfu.itis.master.astafyev.app.controllers.services"/>
+    <context:component-scan base-package="ru.kazan.kpfu.itis.master.astafyev.app.repositories"/>
+    <context:component-scan base-package="ru.kazan.kpfu.itis.master.astafyev.app.services"/>
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
@@ -29,7 +29,7 @@
     <!-- Настройки фабрики сессий Хибернейта -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
           p:dataSource-ref="dataSource"
-          p:packagesToScan="ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities">
+          p:packagesToScan="ru.kazan.kpfu.itis.master.astafyev.app.entities">
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.connection.dialect">${hibernate.dialect}</prop>

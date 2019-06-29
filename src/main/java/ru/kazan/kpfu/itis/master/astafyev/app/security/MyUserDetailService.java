@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.User;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.services.UserService;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
+import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
 
 /*****
  * @author Igor Astafyev

@@ -75,15 +75,13 @@
                     <div class="admin-clear-block">Статей не найдено</div>
                 </#if>
             </div>
-
+            <div class="up-button" id="toTop">
+                <img src="/resources/images/upButton-img.jpg" alt="Вверх">
+            </div>
         </div>
     </section>
 
     <#include "templates/footer.ftl"/>
-
-    <div class="up-button" id="toTop">
-        <img src="/resources/images/upButton-img.jpg" alt="Вверх">
-    </div>
 
 </div>
 </body>

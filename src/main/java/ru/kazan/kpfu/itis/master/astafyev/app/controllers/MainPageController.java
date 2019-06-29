@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.services.ArticleService;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.services.UserService;
+import ru.kazan.kpfu.itis.master.astafyev.app.services.ArticleService;
+import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -3,7 +3,7 @@ package ru.kazan.kpfu.itis.master.astafyev.app.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.kazan.kpfu.itis.master.astafyev.app.controllers.entities.User;
+import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
