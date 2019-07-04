@@ -1,7 +1,6 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.api;
 
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +22,17 @@ import java.util.regex.Pattern;
 @Controller
 public class ApiVKController {
 
-    @Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
+    private final Methods methods;
+    private final AccessVariablesForAPI vars;
+
+    public ApiVKController(HttpServletRequest request,
+                           Methods methods,
+                           AccessVariablesForAPI vars) {
+        this.request = request;
+        this.methods = methods;
+        this.vars = vars;
+    }
 
 
     @ResponseBody
@@ -33,18 +41,16 @@ public class ApiVKController {
         String photo_url = request.getParameter("photo");
         String photo = cutPhotoIdFromURL(photo_url);
         String PHOTO_ID = "photos=" + photo;
-        String url = (AccessVariablesForAPI.VK_MAIN_URL_ADDRESS +
-                AccessVariablesForAPI.VK_API_METHOD +
-                PHOTO_ID + AccessVariablesForAPI.VK_ACCESS_TOKEN_HEADER +
-                AccessVariablesForAPI.VK_ACCESS_TOKEN);
+        String url = (vars.VK_MAIN_URL_ADDRESS + vars.VK_API_METHOD +
+                PHOTO_ID + vars.VK_ACCESS_TOKEN_HEADER + vars.VK_ACCESS_TOKEN);
 
-        JSONObject result = Methods.getRequestResultByURL(url);
+        JSONObject result = methods.getRequestResultByURL(url);
         int likes_count = result.getJSONArray("response").
                 getJSONObject(0).getJSONObject("likes").getInt("count");
         int reposts_count = result.getJSONArray("response").
                 getJSONObject(0).getJSONObject("reposts").getInt("count");
 
-        String image_url = Methods.getVKImageURL(result);
+        String image_url = methods.getVKImageURL(result);
         JSONObject json = new JSONObject();
         json.put("likes", likes_count);
         json.put("reposts", reposts_count);

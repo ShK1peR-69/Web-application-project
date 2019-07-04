@@ -1,6 +1,5 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
+import ru.kazan.kpfu.itis.master.astafyev.app.security.MyUserDetail;
 import ru.kazan.kpfu.itis.master.astafyev.app.services.ArticleService;
 import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
-import ru.kazan.kpfu.itis.master.astafyev.app.security.MyUserDetail;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,14 +23,17 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ProfileController {
 
-    @Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
+    private final UserService userService;
+    private final ArticleService articleService;
+    private final Methods methods;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ArticleService articleService;
+    public ProfileController(HttpServletRequest request, UserService userService, ArticleService articleService, Methods methods) {
+        this.request = request;
+        this.userService = userService;
+        this.articleService = articleService;
+        this.methods = methods;
+    }
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String renderProfilePage() {
@@ -49,7 +51,7 @@ public class ProfileController {
         String new_pass = request.getParameter("new_pass");
 
         User updateUser = user.getUser();
-        updateUser.setPassword(Methods.hashPass(new_pass));
+        updateUser.setPassword(methods.hashPass(new_pass));
         userService.addNewUser(updateUser);
         return "ok";
     }

@@ -3,11 +3,6 @@
 
 <header>
     <div class="main-header">
-<#--        <div class="header-image">-->
-<#--            <a href="/">-->
-<#--                <img src="/resources/images/football.png" alt="logo">-->
-<#--            </a>-->
-<#--        </div>-->
         <a href="/" class="logo">
             <img alt="Главная" src="/resources/images/logo.png">
         </a>

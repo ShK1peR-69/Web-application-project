@@ -2,7 +2,6 @@ package ru.kazan.kpfu.itis.master.astafyev.app.repositories;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.Article;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.Comment;
@@ -19,14 +18,15 @@ import java.util.List;
 @Repository
 public class UserRepository {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+    private final CommentRepository commentRepository;
+    private final ArticleRepository articleRepository;
 
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private ArticleRepository articleRepository;
+    public UserRepository(SessionFactory sessionFactory, CommentRepository commentRepository, ArticleRepository articleRepository) {
+        this.sessionFactory = sessionFactory;
+        this.commentRepository = commentRepository;
+        this.articleRepository = articleRepository;
+    }
 
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {

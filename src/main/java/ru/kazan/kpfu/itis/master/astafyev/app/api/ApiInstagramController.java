@@ -1,7 +1,6 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.api;
 
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,19 +21,27 @@ import java.util.regex.Pattern;
 
 @Controller
 public class ApiInstagramController {
+    private final AccessVariablesForAPI vars;
+    private final HttpServletRequest request;
+    private final Methods methods;
 
-    @Autowired
-    private HttpServletRequest request;
+    public ApiInstagramController(HttpServletRequest request,
+                                  Methods methods,
+                                  AccessVariablesForAPI vars) {
+        this.request = request;
+        this.methods = methods;
+        this.vars = vars;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/api/instagram", method = RequestMethod.POST)
     public String getInformationAboutInstagramItem() throws IOException {
         String post_url = request.getParameter("media");
-        String content_URL = AccessVariablesForAPI.INSTAGRAM_POST_INFO + post_url;
-        JSONObject result = Methods.getRequestResultByURL(content_URL);
+        String content_URL = vars.INSTAGRAM_POST_INFO + post_url;
+        JSONObject result = methods.getRequestResultByURL(content_URL);
 
-        JSONObject media_result = Methods.getRequestResultByURL(AccessVariablesForAPI.INSTAGRAM_API_METHOD +
-                result.get("media_id") + "?access_token=" + AccessVariablesForAPI.INSTAGRAM_ACCESS_TOKEN);
+        JSONObject media_result = methods.getRequestResultByURL(vars.INSTAGRAM_API_METHOD +
+                result.get("media_id") + "?access_token=" + vars.INSTAGRAM_ACCESS_TOKEN);
         int likes_count = media_result.getJSONObject("data").getJSONObject("likes").getInt("count");
 
         String location_name = null;

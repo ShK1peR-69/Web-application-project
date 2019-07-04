@@ -2,9 +2,9 @@ package ru.kazan.kpfu.itis.master.astafyev.app.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,14 +13,15 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.kazan.kpfu.itis.master.astafyev.app.api.ApiVKController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.apache.http.protocol.HTTP.USER_AGENT;
 
 /*****
  * @author Igor Astafyev
@@ -31,7 +32,13 @@ import static org.apache.http.protocol.HTTP.USER_AGENT;
 @Component
 public class Methods {
 
-    public static void addImageToLocalFolder(MultipartFile file, HttpServletRequest request) throws IOException {
+    private final AccessVariablesForAPI vars;
+
+    public Methods(AccessVariablesForAPI vars) {
+        this.vars = vars;
+    }
+
+    public void addImageToLocalFolder(MultipartFile file, HttpServletRequest request) throws IOException {
         String PATH = "src/main/webapp/resources/images/tmp/";
         String PATH_FOR_COPY = "\\resources\\images\\tmp\\";
 
@@ -39,7 +46,8 @@ public class Methods {
         BufferedOutputStream bos_copy;
         byte[] fileBytes = file.getBytes();
         String fileName = getStartPathForSaveImage(request) + PATH + file.getOriginalFilename();
-        String copy_file = request.getServletContext().getRealPath("/") + PATH_FOR_COPY + file.getOriginalFilename();
+        String copy_file = request.getServletContext().getRealPath("/") +
+                PATH_FOR_COPY + file.getOriginalFilename();
 
         bos = new BufferedOutputStream(new FileOutputStream(
                 new File(fileName)));
@@ -50,7 +58,7 @@ public class Methods {
         bos.close();
     }
 
-    public static String hashPass(String password) {
+    public String hashPass(String password) {
         password = "first_sold" + password;
         password = Arrays.toString(DigestUtils.sha256(password));
         password += "second_sold";
@@ -58,16 +66,16 @@ public class Methods {
         return password;
     }
 
-    public static String convertDateToStringFormat(Date date) {
+    public String convertDateToStringFormat(Date date) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy" + " HH:mm");
         return simpleDateFormat.format(date);
     }
 
-    public static JSONObject getRequestResultByURL(String url) throws IOException {
-        HttpClient client = new DefaultHttpClient();
+    public JSONObject getRequestResultByURL(String url) throws IOException {
+        CloseableHttpClient client = HttpClientBuilder.create().build();
         HttpGet request = new HttpGet(url);
-
-        request.addHeader("User-Agent", USER_AGENT);
+        String httpHeader = "User-Agent";
+        request.addHeader(httpHeader, httpHeader);
         HttpResponse response = null;
         try {
             response = client.execute(request);
@@ -78,7 +86,7 @@ public class Methods {
         return new JSONObject(EntityUtils.toString(response.getEntity()));
     }
 
-    public static String chooseArticleSource(String source, String content) {
+    public String chooseArticleSource(String source, String content) {
         Pattern pattern_vk = Pattern.compile("\\.userapi\\.com/");
         Matcher matcher_vk = pattern_vk.matcher(content);
         if (matcher_vk.find()) {
@@ -102,7 +110,7 @@ public class Methods {
         return source;
     }
 
-    public static String getVKImageURL(JSONObject url){
+    public String getVKImageURL(JSONObject url) {
         String imageURL = "";
         JSONArray jsonArray = url.getJSONArray("response").
                 getJSONObject(0).getJSONArray("sizes");
@@ -115,14 +123,14 @@ public class Methods {
         return imageURL;
     }
 
-    public static String returnNameOfArticleSource(String source, String content) throws IOException {
+    public String returnNameOfArticleSource(String source, String content) throws IOException {
         if (source.equals("Instagram")) {
-            content = (String) Methods.getRequestResultByURL(
+            content = (String) getRequestResultByURL(
                     "https://api.instagram.com/oembed/?callback=&url=" + content)
                     .get("thumbnail_url");
         }
         if (source.equals("ВКонтакте")) {
-            content = Methods.getVKSourceForNewArticle(content);
+            content = getVKSourceForNewArticle(content);
         }
         if (source.equals("YouTube")) {
             content = content.replace("watch?v=", "embed/");
@@ -130,23 +138,21 @@ public class Methods {
         return content;
     }
 
-    private static String getStartPathForSaveImage(HttpServletRequest request) {
+    private String getStartPathForSaveImage(HttpServletRequest request) {
         String path = "";
         String[] path_parts = request.getServletContext().getRealPath("/").split("\\\\");
         for (int i = 0; i < path_parts.length - 2; i++) {
-            path += path_parts[i] + "/";
+            path = path.concat(path_parts[i] + "/");
         }
         return path;
     }
 
-    private static String getVKSourceForNewArticle(String content) throws IOException {
+    private String getVKSourceForNewArticle(String content) throws IOException {
 
         String photo = "photos=" + ApiVKController.cutPhotoIdFromURL(content);
         content = getVKImageURL(getRequestResultByURL(
-                AccessVariablesForAPI.VK_MAIN_URL_ADDRESS +
-                        AccessVariablesForAPI.VK_API_METHOD + photo +
-                        AccessVariablesForAPI.VK_ACCESS_TOKEN_HEADER +
-                        AccessVariablesForAPI.VK_ACCESS_TOKEN));
+                vars.VK_MAIN_URL_ADDRESS + vars.VK_API_METHOD + photo +
+                        vars.VK_ACCESS_TOKEN_HEADER + vars.VK_ACCESS_TOKEN));
         return content;
     }
 }

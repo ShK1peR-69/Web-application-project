@@ -1,6 +1,5 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
@@ -16,8 +15,11 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository usersRepository;
+    private final UserRepository usersRepository;
+
+    public UserService(UserRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
 
     @Transactional
     public List<User> getAllUsers() {

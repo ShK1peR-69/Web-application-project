@@ -1,7 +1,6 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.controllers;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +22,17 @@ import java.util.List;
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
+    private final Methods methods;
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public RegistrationController(HttpServletRequest request,
+                                  Methods methods,
+                                  UserService userService) {
+        this.request = request;
+        this.methods = methods;
+        this.userService = userService;
+    }
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -47,7 +52,7 @@ public class RegistrationController {
             model.put("error_msg", "пароли не совпадают");
             return "registration";
         }
-        first_pass = Methods.hashPass(first_pass);
+        first_pass = methods.hashPass(first_pass);
 
         User user = new User(first_name, second_name, email, first_pass, "ROLE_USER");
         userService.addNewUser(user);

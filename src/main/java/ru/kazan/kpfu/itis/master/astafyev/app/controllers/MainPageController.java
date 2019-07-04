@@ -1,12 +1,10 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.kazan.kpfu.itis.master.astafyev.app.services.ArticleService;
-import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,14 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class MainPageController {
 
-    @Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
+    private final ArticleService articleService;
 
-    @Autowired
-    private ArticleService articleService;
-
-    @Autowired
-    private UserService userService;
+    public MainPageController(HttpServletRequest request,
+                              ArticleService articleService) {
+        this.request = request;
+        this.articleService = articleService;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String renderMainPage(ModelMap model) {

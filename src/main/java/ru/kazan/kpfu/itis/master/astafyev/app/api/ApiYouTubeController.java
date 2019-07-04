@@ -1,7 +1,6 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.api;
 
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,18 +20,26 @@ import java.io.IOException;
 @Controller
 public class ApiYouTubeController {
 
-    @Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
+    private final Methods methods;
+    private final AccessVariablesForAPI vars;
+
+    public ApiYouTubeController(HttpServletRequest request,
+                                Methods methods,
+                                AccessVariablesForAPI vars) {
+        this.request = request;
+        this.methods = methods;
+        this.vars = vars;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/api/youtube", method = RequestMethod.POST)
     public String getVideoInformationFromYouTube() throws IOException {
         String source_url = request.getParameter("video");
         String VIDEO_ID = cutVideoIdFromURL(source_url);
-        String api_url = (AccessVariablesForAPI.YOUTUBE_MAIN_URL +
-                VIDEO_ID + AccessVariablesForAPI.YOUTUBE_PARAMETER +
-                AccessVariablesForAPI.YOUTUBE_ACCESS_KEY);
-        JSONObject result = Methods.getRequestResultByURL(api_url);
+        String api_url = (vars.YOUTUBE_MAIN_URL + VIDEO_ID +
+                vars.YOUTUBE_PARAMETER + vars.YOUTUBE_ACCESS_KEY);
+        JSONObject result = methods.getRequestResultByURL(api_url);
         JSONObject video_statistics = result.getJSONArray("items").
                 getJSONObject(0).getJSONObject("statistics");
 

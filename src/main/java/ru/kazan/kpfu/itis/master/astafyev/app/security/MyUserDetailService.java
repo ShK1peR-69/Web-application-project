@@ -1,6 +1,5 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,8 +15,11 @@ import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
 @Component
 public class MyUserDetailService implements UserDetailsService {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+
+    public MyUserDetailService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

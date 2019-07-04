@@ -1,6 +1,5 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -8,10 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.Article;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.Comment;
+import ru.kazan.kpfu.itis.master.astafyev.app.security.MyUserDetail;
 import ru.kazan.kpfu.itis.master.astafyev.app.services.ArticleService;
 import ru.kazan.kpfu.itis.master.astafyev.app.services.CommentService;
-import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
-import ru.kazan.kpfu.itis.master.astafyev.app.security.MyUserDetail;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,17 +28,20 @@ import java.util.List;
 @RequestMapping(value = "/admin")
 public class AdminController {
 
-    @Autowired
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
+    private final ArticleService articleService;
+    private final CommentService commentService;
+    private final Methods methods;
 
-    @Autowired
-    private ArticleService articleService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CommentService commentService;
+    public AdminController(HttpServletRequest request,
+                           ArticleService articleService,
+                           CommentService commentService,
+                           Methods methods) {
+        this.request = request;
+        this.articleService = articleService;
+        this.commentService = commentService;
+        this.methods = methods;
+    }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String renderAdminPage() {
@@ -70,16 +71,16 @@ public class AdminController {
         String content = request.getParameter("content");
         String sport = request.getParameter("sport");
 
-        String nowDate = Methods.convertDateToStringFormat(new Date());
+        String nowDate = methods.convertDateToStringFormat(new Date());
         MyUserDetail user = (MyUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String source = user.getUser().getName() + " " + user.getUser().getSecondName();
 
         if (content != null) {
-            source = Methods.chooseArticleSource(source, content);
+            source = methods.chooseArticleSource(source, content);
         }
         if (file != null) {
             if (!file.isEmpty()) {
-                Methods.addImageToLocalFolder(file, request);
+                methods.addImageToLocalFolder(file, request);
                 content = "/resources/images/tmp/" + file.getOriginalFilename();
             }
         }
@@ -87,7 +88,7 @@ public class AdminController {
         if (content == null || content.equals("")) {
             content = "/resources/images/sportTime.jpg";
         } else {
-            content = Methods.returnNameOfArticleSource(source, content);
+            content = methods.returnNameOfArticleSource(source, content);
         }
         if (source.equals("Change")) {
             source = "ВКонтакте";

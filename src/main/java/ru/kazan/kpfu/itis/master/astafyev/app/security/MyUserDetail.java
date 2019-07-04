@@ -21,7 +21,7 @@ public class MyUserDetail implements UserDetails {
      */
     private User user;
 
-    public MyUserDetail(User user) {
+    MyUserDetail(User user) {
         this.user = user;
     }
 

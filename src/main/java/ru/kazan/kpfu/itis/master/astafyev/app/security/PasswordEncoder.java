@@ -1,5 +1,7 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 
 /*****
@@ -8,16 +10,19 @@ import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
  * Password encoder for Spring Security
  *****/
 
-public class PasswordEncoder implements org.springframework.security.authentication.encoding.PasswordEncoder {
+public class PasswordEncoder extends Md5PasswordEncoder {
+
+    @Autowired
+    private Methods methods;
 
     @Override
     public String encodePassword(String password, Object o) {
-        return Methods.hashPass(password);
+        return methods.hashPass(password);
     }
 
     @Override
     public boolean isPasswordValid(String dbPass, String userPass, Object o) {
-        userPass = Methods.hashPass(userPass);
+        userPass = methods.hashPass(userPass);
         return dbPass.equals(userPass);
     }
 }

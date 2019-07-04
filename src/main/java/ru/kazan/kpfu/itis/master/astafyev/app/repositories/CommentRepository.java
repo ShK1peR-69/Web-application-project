@@ -2,7 +2,6 @@ package ru.kazan.kpfu.itis.master.astafyev.app.repositories;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.Article;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.Comment;
@@ -19,8 +18,11 @@ import java.util.List;
 @Repository
 public class CommentRepository {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public CommentRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @SuppressWarnings("unchecked")
     public List<Comment> getAllComments() {
