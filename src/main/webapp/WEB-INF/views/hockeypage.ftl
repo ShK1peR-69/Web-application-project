@@ -72,14 +72,13 @@
                 <#include "templates/advertising.ftl"/>
             </div>
             <#include "templates/news.ftl"/>
+            <div class="up-button" id="toTop">
+                <img src="/resources/images/upButton-img.jpg" alt="Вверх">
+            </div>
         </div>
     </section>
 
     <#include "templates/footer.ftl"/>
-
-    <div class="up-button" id="toTop">
-        <img src="/resources/images/upButton-img.jpg" alt="Вверх">
-    </div>
 
 </div>
 </body>

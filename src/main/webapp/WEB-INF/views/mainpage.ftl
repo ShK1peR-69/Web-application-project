@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../../resources/js/infoWindows.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
-<body>
+<body onresize="">
 <div class="mainpage">
 
     <#include "templates/header.ftl"/>
@@ -76,9 +76,6 @@
             <div class="up-button" id="toTop">
                 <img src="/resources/images/upButton-img.jpg" alt="Вверх">
             </div>
-        </div>
-        <div class="up-button" id="toTop">
-            <img src="/resources/images/upButton-img.jpg" alt="Вверх">
         </div>
     </section>
 

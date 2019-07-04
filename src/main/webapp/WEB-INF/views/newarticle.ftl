@@ -76,8 +76,9 @@
                         </div>
                         <div class="image-url" id="image-url"></div>
                         <mark>или</mark>
+                        <label for="article-content"></label>
                         <input class="adding-article-input" type="text"
-                               name="content" id="article-content" placeholder="Вставить ссылку.."/>
+                                                                    name="content" id="article-content" placeholder="Вставить ссылку.."/>
                         <div class="error_msg" id="error-url" disabled></div>
                     </div>
                     <p>* - обязательно для заполнения</p>
@@ -88,9 +89,6 @@
             <div class="up-button" id="toTop">
                 <img src="/resources/images/upButton-img.jpg" alt="Вверх">
             </div>
-        </div>
-        <div class="up-button" id="toTop">
-            <img src="/resources/images/upButton-img.jpg" alt="Вверх">
         </div>
     </section>
 
