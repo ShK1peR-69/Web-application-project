@@ -21,7 +21,7 @@
             </@sec.authorize>
             <@sec.authorize access="isAuthenticated()">
                 <#if user?? && user?has_content>
-                    <div class="profile-header">Привет,&nbsp;<a href="/profile"> ${user.getName()} </a>&nbsp;!</div>
+                    <div class="profile-header">Привет,&nbsp;<a href="/profile"> ${user.getName()} </a>&nbsp!</div>
                 </#if>
             </@sec.authorize>
         </div>
