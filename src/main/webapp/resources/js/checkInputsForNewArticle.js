@@ -149,13 +149,13 @@ $('#saveArticle').on("click", function () {
             } else {
                 text.css("border", "0.5pt solid red");
                 $("#text-input-error").text("Поле должно содержать минимум 50 символов")
-                    .css("display", "block");
+                    .css("display", "block").css("margin-top", "15px");
                 event.preventDefault();
             }
         } else {
             title.css("border", "0.5pt solid red");
             $("#title-input-error").text("Поле должно содержать минимум 10 символов")
-                .css("display", "block");
+                .css("display", "block").css("margin-top", "15px");
             event.preventDefault();
         }
     }

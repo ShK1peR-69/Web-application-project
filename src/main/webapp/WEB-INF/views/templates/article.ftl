@@ -50,8 +50,10 @@
 
         <div class="article-adding-comment">
             <div id="comment-error"></div>
+            <label for="commentText"></label>
             <textarea id="commentText" type="text" maxlength="500" minlength="1"
-                      placeholder="Комментарий.." name="comment" required></textarea>
+                      placeholder="Комментарий.." name="comment" required>
+            </textarea>
             <button id="addComment" type="button" class="comment-button">Добавить</button>
             <div id="article_id" class="article-id disabled" disabled="true">${article.getId()}</div>
         </div>

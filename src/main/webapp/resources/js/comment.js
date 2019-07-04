@@ -38,6 +38,7 @@ $(function () {
         } else {
             $("#commentText").css("border", "0.7pt solid red");
             $("#comment-error").text("Заполните поле для комментария");
+            $("#comment-error").css("margin-left", "45px");
         }
     })
 });

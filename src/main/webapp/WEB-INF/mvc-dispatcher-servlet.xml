@@ -18,6 +18,7 @@
 
     <!-- Определяем папку, в которой будем искать веб компоненты (@Controller - контроллеры)-->
     <context:component-scan base-package="ru.kazan.kpfu.itis.master.astafyev.app.controllers"/>
+    <context:component-scan base-package="ru.kazan.kpfu.itis.master.astafyev.app.api"/>
 
     <!-- Всю статику (изображения, css-файлы, javascript) положим в папку webapp/resources -->
     <mvc:resources mapping="/resources/**" location="/resources/"/>
