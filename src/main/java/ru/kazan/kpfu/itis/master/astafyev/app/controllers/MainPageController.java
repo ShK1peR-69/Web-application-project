@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainPageController {
-
     private final HttpServletRequest request;
     private final ArticleService articleService;
 

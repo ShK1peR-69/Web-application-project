@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 @Controller
 public class ArticleController {
-
     private final HttpServletRequest request;
     private final ArticleService articleService;
     private final CommentService commentService;
@@ -32,7 +31,7 @@ public class ArticleController {
         this.commentService = commentService;
     }
 
-    @RequestMapping(value = "/article/{id}", method = RequestMethod.GET) // /article/{id}
+    @RequestMapping(value = "/article/{id}", method = RequestMethod.GET)
     public String renderArticlePage(@PathVariable("id") long id) {
         request.setAttribute("article", articleService.getArticleById(id));
         ArrayList<Comment> comments = (ArrayList<Comment>) commentService.getAllCommentsOfArticle(

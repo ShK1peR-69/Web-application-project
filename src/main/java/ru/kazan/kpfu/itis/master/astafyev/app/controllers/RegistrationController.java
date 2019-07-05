@@ -12,6 +12,7 @@ import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /*****
@@ -22,19 +23,16 @@ import java.util.List;
 
 @Controller
 public class RegistrationController {
-
-    private final HttpServletRequest request;
+    private HttpServletRequest request;
     private final Methods methods;
     private final UserService userService;
 
-    public RegistrationController(HttpServletRequest request,
-                                  Methods methods,
+    public RegistrationController(HttpServletRequest request, Methods methods,
                                   UserService userService) {
         this.request = request;
         this.methods = methods;
         this.userService = userService;
     }
-
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String renderRegistrationPage() {
@@ -48,6 +46,7 @@ public class RegistrationController {
                                       @RequestParam("one_password") String first_pass,
                                       @RequestParam("two_password") String second_pass,
                                       ModelMap model) {
+        HttpSession session = request.getSession();
         if (!first_pass.equals(second_pass)) {
             model.put("error_msg", "пароли не совпадают");
             return "registration";
@@ -56,10 +55,10 @@ public class RegistrationController {
 
         User user = new User(first_name, second_name, email, first_pass, "ROLE_USER");
         userService.addNewUser(user);
-        request.getSession().setAttribute("first_name", first_name);
-        request.getSession().setAttribute("second_name", second_name);
-        request.getSession().setAttribute("email", email);
-        request.getSession().setAttribute("user", user);
+        session.setAttribute("first_name", first_name);
+        session.setAttribute("second_name", second_name);
+        session.setAttribute("email", email);
+        session.setAttribute("user", user);
         String login_url = "j_spring_security_check?j_username=" + email + "&j_password=" + second_pass;
         return "forward:/" + login_url;
     }

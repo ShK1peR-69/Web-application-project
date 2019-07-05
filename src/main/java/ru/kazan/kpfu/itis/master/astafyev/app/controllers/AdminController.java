@@ -27,7 +27,6 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
-
     private final HttpServletRequest request;
     private final ArticleService articleService;
     private final CommentService commentService;

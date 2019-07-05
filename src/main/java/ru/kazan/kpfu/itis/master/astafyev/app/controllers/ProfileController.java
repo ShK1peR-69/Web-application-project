@@ -13,6 +13,7 @@ import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /*****
  * @author Igor Astafyev
@@ -22,13 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class ProfileController {
-
     private final HttpServletRequest request;
     private final UserService userService;
     private final ArticleService articleService;
     private final Methods methods;
 
-    public ProfileController(HttpServletRequest request, UserService userService, ArticleService articleService, Methods methods) {
+    public ProfileController(HttpServletRequest request, UserService userService,
+                             ArticleService articleService, Methods methods) {
         this.request = request;
         this.userService = userService;
         this.articleService = articleService;
@@ -39,9 +40,10 @@ public class ProfileController {
     public String renderProfilePage() {
         MyUserDetail user = (MyUserDetail) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
-        request.getSession().setAttribute("user", user.getUser());
-        request.setAttribute("user", user.getUser());
-        request.setAttribute("articles", articleService.getArticlesByAuthor(user.getUser()));
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user.getUser());
+        session.setAttribute("user", user.getUser());
+        session.setAttribute("articles", articleService.getArticlesByAuthor(user.getUser()));
         return "profile";
     }
 

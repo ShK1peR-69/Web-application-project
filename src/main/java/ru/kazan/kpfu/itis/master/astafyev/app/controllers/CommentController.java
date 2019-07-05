@@ -24,8 +24,8 @@ public class CommentController {
     private final CommentService commentService;
     private final Methods methods;
 
-    public CommentController(ArticleService articleService,
-                             CommentService commentService, Methods methods) {
+    public CommentController(ArticleService articleService, CommentService commentService,
+                             Methods methods) {
         this.articleService = articleService;
         this.commentService = commentService;
         this.methods = methods;

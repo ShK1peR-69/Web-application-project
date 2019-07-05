@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LoginController {
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String renderLoginPage(ModelMap model) {
         model.put("login", "failed");
