@@ -17,7 +17,6 @@ import java.util.List;
 
 @Repository
 public class ArticleRepository {
-
     private final SessionFactory sessionFactory;
     private final CommentRepository commentRepository;
 
@@ -28,7 +27,8 @@ public class ArticleRepository {
 
     @SuppressWarnings("unchecked")
     public List<Article> getAll() {
-        return sessionFactory.getCurrentSession().createCriteria(Article.class).list();
+        return sessionFactory.getCurrentSession()
+                .createCriteria(Article.class).list();
     }
 
     public void saveNewArticle(Article article) {
@@ -48,9 +48,12 @@ public class ArticleRepository {
         String source = article.getSource();
         User user = article.getAuthor();
         return (Article) sessionFactory.getCurrentSession().createCriteria(Article.class)
-                .add(Restrictions.eq("title", title)).add(Restrictions.eq("text", text))
-                .add(Restrictions.eq("image", image)).add(Restrictions.eq("sport", sport))
-                .add(Restrictions.eq("source", source)).add(Restrictions.eq("author", user))
+                .add(Restrictions.eq("title", title))
+                .add(Restrictions.eq("text", text))
+                .add(Restrictions.eq("image", image))
+                .add(Restrictions.eq("sport", sport))
+                .add(Restrictions.eq("source", source))
+                .add(Restrictions.eq("author", user))
                 .uniqueResult();
     }
 

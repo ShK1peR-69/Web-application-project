@@ -4,11 +4,11 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.AccessVariablesForAPI;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,38 +22,35 @@ import java.util.regex.Pattern;
 @Controller
 public class ApiInstagramController {
     private final AccessVariablesForAPI vars;
-    private final HttpServletRequest request;
     private final Methods methods;
 
-    public ApiInstagramController(HttpServletRequest request,
-                                  Methods methods,
-                                  AccessVariablesForAPI vars) {
-        this.request = request;
+    public ApiInstagramController(Methods methods, AccessVariablesForAPI vars) {
         this.methods = methods;
         this.vars = vars;
     }
 
     @ResponseBody
     @RequestMapping(value = "/api/instagram", method = RequestMethod.POST)
-    public String getInformationAboutInstagramItem() throws IOException {
-        String post_url = request.getParameter("media");
+    public String getInformationAboutInstagramItem(
+            @RequestParam("media") String post_url) throws IOException {
         String content_URL = vars.INSTAGRAM_POST_INFO + post_url;
         JSONObject result = methods.getRequestResultByURL(content_URL);
 
         JSONObject media_result = methods.getRequestResultByURL(vars.INSTAGRAM_API_METHOD +
                 result.get("media_id") + "?access_token=" + vars.INSTAGRAM_ACCESS_TOKEN);
-        int likes_count = media_result.getJSONObject("data").getJSONObject("likes").getInt("count");
+        int likes_count = media_result.getJSONObject("data")
+                .getJSONObject("likes").getInt("count");
 
         String location_name = null;
         if (!media_result.getJSONObject("data").get("location").toString().equals("null")) {
-            location_name = (String) media_result.getJSONObject("data").getJSONObject("location").get("name");
+            location_name = (String) media_result.getJSONObject("data")
+                    .getJSONObject("location").get("name");
             Pattern pattern = Pattern.compile("[а-яА-Я]");
             Matcher match = pattern.matcher(location_name.toLowerCase());
             if (match.find()) {
                 location_name = null;
             }
         }
-
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("likes", likes_count);
         jsonObject.put("place", location_name);

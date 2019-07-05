@@ -4,11 +4,11 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.AccessVariablesForAPI;
 import ru.kazan.kpfu.itis.master.astafyev.app.util.Methods;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /*****
@@ -19,23 +19,18 @@ import java.io.IOException;
 
 @Controller
 public class ApiYouTubeController {
-
-    private final HttpServletRequest request;
     private final Methods methods;
     private final AccessVariablesForAPI vars;
 
-    public ApiYouTubeController(HttpServletRequest request,
-                                Methods methods,
-                                AccessVariablesForAPI vars) {
-        this.request = request;
+    public ApiYouTubeController(Methods methods, AccessVariablesForAPI vars) {
         this.methods = methods;
         this.vars = vars;
     }
 
     @ResponseBody
     @RequestMapping(value = "/api/youtube", method = RequestMethod.POST)
-    public String getVideoInformationFromYouTube() throws IOException {
-        String source_url = request.getParameter("video");
+    public String getVideoInformationFromYouTube(
+            @RequestParam("video") String source_url) throws IOException {
         String VIDEO_ID = cutVideoIdFromURL(source_url);
         String api_url = (vars.YOUTUBE_MAIN_URL + VIDEO_ID +
                 vars.YOUTUBE_PARAMETER + vars.YOUTUBE_ACCESS_KEY);

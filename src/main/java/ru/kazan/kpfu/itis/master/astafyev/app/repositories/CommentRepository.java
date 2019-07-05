@@ -17,7 +17,6 @@ import java.util.List;
 
 @Repository
 public class CommentRepository {
-
     private final SessionFactory sessionFactory;
 
     public CommentRepository(SessionFactory sessionFactory) {

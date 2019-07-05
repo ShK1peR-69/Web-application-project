@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
 import ru.kazan.kpfu.itis.master.astafyev.app.services.UserService;
@@ -41,13 +42,12 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/new-registration", method = RequestMethod.POST)
-    public String newUserRegistration(ModelMap model) {
-        String first_name = request.getParameter("first_name");
-        String second_name = request.getParameter("second_name");
-        String email = request.getParameter("email");
-        String first_pass = request.getParameter("one_password");
-        String second_pass = request.getParameter("two_password");
-
+    public String newUserRegistration(@RequestParam("first_name") String first_name,
+                                      @RequestParam("second_name") String second_name,
+                                      @RequestParam("email") String email,
+                                      @RequestParam("one_password") String first_pass,
+                                      @RequestParam("two_password") String second_pass,
+                                      ModelMap model) {
         if (!first_pass.equals(second_pass)) {
             model.put("error_msg", "пароли не совпадают");
             return "registration";
@@ -66,8 +66,7 @@ public class RegistrationController {
 
     @ResponseBody
     @RequestMapping(value = "/check-mail", method = RequestMethod.POST)
-    public String checkNewUserEmail() {
-        String email = request.getParameter("email");
+    public String checkNewUserEmail(@RequestParam("email") String email) {
         List<User> users = userService.getAllUsers();
         for (User u : users) {
             if (u.getEmail().equals(email)) {

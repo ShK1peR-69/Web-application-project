@@ -2,9 +2,9 @@ package ru.kazan.kpfu.itis.master.astafyev.app.controllers;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kazan.kpfu.itis.master.astafyev.app.entities.User;
 import ru.kazan.kpfu.itis.master.astafyev.app.security.MyUserDetail;
@@ -37,7 +37,8 @@ public class ProfileController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String renderProfilePage() {
-        MyUserDetail user = (MyUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetail user = (MyUserDetail) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
         request.getSession().setAttribute("user", user.getUser());
         request.setAttribute("user", user.getUser());
         request.setAttribute("articles", articleService.getArticlesByAuthor(user.getUser()));
@@ -46,14 +47,12 @@ public class ProfileController {
 
     @ResponseBody
     @RequestMapping(value = "/profile/change-password", method = RequestMethod.POST)
-    public String changeUserPassword(ModelMap model) {
-        MyUserDetail user = (MyUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String new_pass = request.getParameter("new_pass");
-
+    public String changeUserPassword(@RequestParam("new_pass") String new_pass) {
+        MyUserDetail user = (MyUserDetail) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
         User updateUser = user.getUser();
         updateUser.setPassword(methods.hashPass(new_pass));
         userService.addNewUser(updateUser);
         return "ok";
     }
-
 }

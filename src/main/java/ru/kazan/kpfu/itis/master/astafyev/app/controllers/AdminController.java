@@ -64,15 +64,16 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/add-new-article", method = RequestMethod.POST)
-    public String addingNewArticle(@RequestParam(value = "photo", required = false)
-                                           MultipartFile file, ModelMap model) throws IOException {
-        String title = request.getParameter("title");
-        String text = request.getParameter("text");
-        String content = request.getParameter("content");
-        String sport = request.getParameter("sport");
-
+    public String addingNewArticle(
+            @RequestParam(value = "photo", required = false) MultipartFile file,
+            @RequestParam("title") String title,
+            @RequestParam("text") String text,
+            @RequestParam("content") String content,
+            @RequestParam("sport") String sport,
+            ModelMap model) throws IOException {
         String nowDate = methods.convertDateToStringFormat(new Date());
-        MyUserDetail user = (MyUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MyUserDetail user = (MyUserDetail) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
         String source = user.getUser().getName() + " " + user.getUser().getSecondName();
 
         if (content != null) {
@@ -95,7 +96,6 @@ public class AdminController {
         }
 
         Article article = new Article(sport, title, text, content, nowDate, source, user.getUser());
-
         List<Article> articles = articleService.getAllArticles();
         for (Article a : articles) {
             if (a.equals(article)) {
@@ -109,9 +109,9 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/comment/delete/{article_id}/{comment_id}", method = RequestMethod.GET)
-    public String deleteCommentFromArticle(@PathVariable long article_id, @PathVariable long comment_id) {
+    public String deleteCommentFromArticle(@PathVariable long article_id,
+                                           @PathVariable long comment_id) {
         commentService.deleteCommentFromArticleById(comment_id);
-
         request.setAttribute("article", articleService.getArticleById(article_id));
         request.setAttribute("comments",
                 commentService.getAllCommentsOfArticle(articleService.getArticleById(article_id)));

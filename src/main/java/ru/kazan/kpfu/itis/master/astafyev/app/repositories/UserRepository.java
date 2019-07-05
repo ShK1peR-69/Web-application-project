@@ -17,12 +17,13 @@ import java.util.List;
 
 @Repository
 public class UserRepository {
-
     private final SessionFactory sessionFactory;
     private final CommentRepository commentRepository;
     private final ArticleRepository articleRepository;
 
-    public UserRepository(SessionFactory sessionFactory, CommentRepository commentRepository, ArticleRepository articleRepository) {
+    public UserRepository(SessionFactory sessionFactory,
+                          CommentRepository commentRepository,
+                          ArticleRepository articleRepository) {
         this.sessionFactory = sessionFactory;
         this.commentRepository = commentRepository;
         this.articleRepository = articleRepository;
@@ -30,7 +31,8 @@ public class UserRepository {
 
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
-        return sessionFactory.getCurrentSession().createCriteria(User.class).list();
+        return sessionFactory.getCurrentSession()
+                .createCriteria(User.class).list();
     }
 
     public void addNewUser(User user) {

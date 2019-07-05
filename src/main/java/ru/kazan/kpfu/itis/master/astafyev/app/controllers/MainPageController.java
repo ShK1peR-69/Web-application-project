@@ -1,9 +1,9 @@
 package ru.kazan.kpfu.itis.master.astafyev.app.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.kazan.kpfu.itis.master.astafyev.app.services.ArticleService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +27,7 @@ public class MainPageController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String renderMainPage(ModelMap model) {
-        String error = request.getParameter("login");
+    public String renderMainPage(@RequestParam("login") String error) {
         if (error != null) {
             request.setAttribute("login", "failed");
         }
