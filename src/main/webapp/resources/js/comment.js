@@ -4,15 +4,17 @@
   */
 
 $(function () {
-    $('#addComment').on("click", function () {
+    let comment = $("#commentText");
+    let error_block = $("#comment-error");
+    let btn = $('#addComment');
+    let article_id = $("#article_id").text();
+    btn.on("click", function () {
         event.preventDefault();
-        let comment = ($("#commentText").val()).toString();
-        if (/[^\s]/gim.test(comment)) {
-            $("#commentText").css("border", "0.8pt solid rgba(180, 180, 180, 0.75)");
-            $("#comment-error").text("");
+        if (/[^\s]/gim.test((comment.val()).toString())) {
+            comment.css("border", "0.8pt solid rgba(180, 180, 180, 0.75)");
+            error_block.text("");
             event.preventDefault();
-            let article_id = $("#article_id").text();
-            let parts = comment.split("\n");
+            let parts = ((comment.val()).toString()).split("\n");
             let edit_comment = "";
             for (let i = 0; i < parts.length; i++) {
                 edit_comment = edit_comment + parts[i] + "<br/>";
@@ -27,18 +29,17 @@ $(function () {
                         $('#comments-block').append('<div class="article-comments">\n' +
                             '<div class="article-comment-author">' + "Вы, " + data + '</div>\n' +
                             '<div class="article-comment-text">' + edit_comment + '</div></div>');
-                        $("#commentText").val('');
+                        comment.val('');
                     }
                 },
                 error: function () {
                     alert("На сервере произошла ошибка. Попробуйте повторить попытку позже.");
-                    $("#commentText").val('');
+                    comment.val('');
                 }
             });
         } else {
-            $("#commentText").css("border", "0.7pt solid red");
-            $("#comment-error").text("Заполните поле для комментария");
-            $("#comment-error").css("margin-left", "45px");
+            comment.css("border", "0.7pt solid red");
+            error_block.text("Заполните поле для комментария").css("margin-left", "45px");
         }
     })
 });

@@ -5,23 +5,25 @@
 
 $('#changePassword').on("click", function () {
         event.preventDefault();
-        let old_pass = ($("#old_pass").val()).toString();
-        let new_pass = ($("#new_pass").val()).toString();
+        let old_pass = $("#old_pass");
+        let new_pass = $("#new_pass");
+        let error_old = $("#old_pass_error");
+        let error_new = $("#new_pass_error");
         if (/[^\s]/gim.test(old_pass)) {
-            $("#old_pass").css("border", "0.05rem solid #2b57ff");
-            $("#old_pass_error").text('').css("display", "none");
+            old_pass.css("border", "0.05rem solid #2b57ff");
+            error_old.text('').css("display", "none");
             event.preventDefault();
-            if (/[^\s]/gim.test(new_pass)) {
-                $("#new_pass").css("border", "0.05rem solid #2b57ff");
-                $("#new_pass_error").text('').css("display", "none");
+            if (/[^\s]/gim.test((new_pass.val()).toString())) {
+                new_pass.css("border", "0.05rem solid #2b57ff");
+                error_new.text('').css("display", "none");
                 event.preventDefault();
-                if (old_pass !== new_pass) {
-                    $("#new_pass").css("border", "0.5pt solid red");
-                    $("#old_pass").css("border", "0.5pt solid red");
-                    $("#new_pass_error").text('Пароли не совпадают')
+                if ((old_pass.val()).toString() !== (new_pass.val()).toString()) {
+                    new_pass.css("border", "0.5pt solid red");
+                    old_pass.css("border", "0.5pt solid red");
+                    error_new.text('Пароли не совпадают')
                         .css("display", "block")
                         .css("color", "red");
-                    $("#old_pass_error").text('Пароли не совпадают')
+                    error_old.text('Пароли не совпадают')
                         .css("display", "block")
                         .css("color", "red");
                 } else {
@@ -35,8 +37,8 @@ $('#changePassword').on("click", function () {
                         },
                         success: function (data) {
                             if (data === 'ok') {
-                                $('#old_pass').val('');
-                                $('#new_pass').val('');
+                                old_pass.val('');
+                                new_pass.val('');
                                 alert('Пароль успешно обновлен!');
                             }
                         },
@@ -47,12 +49,12 @@ $('#changePassword').on("click", function () {
                     });
                 }
             } else {
-                $("#new_pass").css("border", "0.5pt solid red").prop("disabled", false);
-                $("#new_pass_error").text("Поле не заполнено");
+                new_pass.css("border", "0.5pt solid red").prop("disabled", false);
+                error_new.text("Поле не заполнено");
             }
         } else {
-            $("#old_pass").css("border", "0.5pt solid red").prop("disabled", false);
-            $("#old_pass_error").text("Поле не заполнено");
+            old_pass.css("border", "0.5pt solid red").prop("disabled", false);
+            error_old.text("Поле не заполнено");
         }
     }
 );

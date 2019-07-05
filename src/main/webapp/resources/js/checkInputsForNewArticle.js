@@ -1,36 +1,42 @@
 /*!
   * @author Igor Astafyev
-  * Validate information for new Article
+  * Validating information for new Article
   */
 
-$('#article-content').on("keyup", function () {
+let content = $('#article-content');
+let save_btn = $("#saveArticle");
+let error_div = $("#error-url");
+let imgUrl = (content.val()).toString();
+
+let pat_img_url = /^(http|https):\/\/([/a-zA-Z0-9_.%\-=]+).(jpg|png|jpeg|gif)$/i;
+let pat_tube = /^(http|https):\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]{11})$/i;
+let pat_vk = /^(http|https):\/\/vk\.com\/([a-zA-Z0-9_-]+)\?z=photo([&%a-zA-Z0-9_\-]+)$/i;
+let pat_inst = /^(http|https):\/\/www\.instagram\.com\/[/a-zA-Z0-9%&_\-]+$/i;
+
+let vkPat = /^(http|https):\/\/vk\.com[\S]+$/i;
+let instagramPat = /^(http|https):\/\/www\.instagram\.com[\S]+$/i;
+let youtubePat = /^(http|https):\/\/www\.youtube\.com\/watch[\S]+$/i;
+
+content.on("keyup", function () {
     event.preventDefault();
-    let imgUrl = ($("#article-content").val()).toString();
-    let pat_img_url = /^(http|https):\/\/([/a-zA-Z0-9_.%\-=]+).(jpg|png|jpeg|gif)$/i;
-    let pat_tube = /^(http|https):\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]{11})$/i;
-    let pat_vk = /^(http|https):\/\/vk\.com\/([a-zA-Z0-9_-]+)\?z=photo([&%a-zA-Z0-9_\-]+)$/i;
-    let pat_inst = /^(http|https):\/\/www\.instagram\.com\/[/a-zA-Z0-9%&_\-]+$/i;
     if (pat_img_url.test(imgUrl) ||
         pat_tube.test(imgUrl) || pat_inst.test(imgUrl) || pat_vk.test(imgUrl)) {
-        $("#article-content").css("border", "0.05rem solid #2b57ff");
-        $("#error-url").css("display", "none");
-        $("#saveArticle").prop("disabled", false);
-        $("#file-input").prop("disabled", true);
-        let vkPat = /^(http|https):\/\/vk\.com[\S]+$/i;
-        let instagramPat = /^(http|https):\/\/www\.instagram\.com[\S]+$/i;
-        let youtubePat = /^(http|https):\/\/www\.youtube\.com\/watch[\S]+$/i;
+        content.css("border", "0.05rem solid #2b57ff");
+        error_div.css("display", "none");
+        save_btn.prop("disabled", false);
+        error_div.prop("disabled", true);
         if (vkPat.test(imgUrl)) {
-            $("#article-content").css("border", "0.05rem solid #2b57ff");
-            $("#error-url").css("display", "none");
-            $("#saveArticle").prop("disabled", false);
+            content.css("border", "0.05rem solid #2b57ff");
+            error_div.css("display", "none");
+            save_btn.prop("disabled", false);
             $.ajax({
                 type: "POST",
                 url: "/api/vk",
                 data: {"photo": imgUrl},
                 success: function (data) {
                     let info = JSON.parse(data);
-                    $("#article-content").css("border", "0.05rem solid #2b57ff");
-                    $("#error-url").css("display", "block")
+                    content.css("border", "0.05rem solid #2b57ff");
+                    error_div.css("display", "block")
                         .css("color", "black")
                         .css("font-size", "0.87rem")
                         .css("font-family", "Arial")
@@ -50,17 +56,17 @@ $('#article-content').on("keyup", function () {
             });
         }
         if (instagramPat.test(imgUrl)) {
-            $("#article-content").css("border", "0.05rem solid #2b57ff");
-            $("#error-url").css("display", "block");
-            $("#saveArticle").prop("disabled", false);
+            content.css("border", "0.05rem solid #2b57ff");
+            error_div.css("display", "block");
+            save_btn.prop("disabled", false);
             $.ajax({
                 type: "POST",
                 url: "/api/instagram",
                 data: {"media": imgUrl},
                 success: function (data) {
                     let info = JSON.parse(data);
-                    $("#article-content").css("border", "0.05rem solid #2b57ff");
-                    $("#error-url").css("display", "block")
+                    content.css("border", "0.05rem solid #2b57ff");
+                    error_div.css("display", "block")
                         .css("color", "black")
                         .css("font-size", "0.87rem")
                         .css("font-family", "Arial")
@@ -70,11 +76,11 @@ $('#article-content').on("keyup", function () {
                             "style='width:20px;height:18px;'>&nbsp;" +
                             (info.likes).toLocaleString('ru'));
                     if (info.place != null) {
-                        $("#error-url").append("<img alt='location' " +
+                        error_div.append("<img alt='location' " +
                             "src='/resources/images/location.png' " +
                             "style='width:17px;height:21px;margin-left:20px;'>&nbsp;" + info.place);
                     }
-                    $("#error-url").append("<img alt='user' " +
+                    error_div.append("<img alt='user' " +
                         "src='/resources/images/inst_user.png' " +
                         "style='width:17px;height:16px;margin-left:20px;'>&nbsp;" +
                         "<a href='" + info.author_url + "' target='_blank'>" +
@@ -87,17 +93,17 @@ $('#article-content').on("keyup", function () {
             });
         }
         if (youtubePat.test(imgUrl)) {
-            $("#article-content").css("border", "0.05rem solid #2b57ff");
-            $("#error-url").css("display", "none");
-            $("#saveArticle").prop("disabled", false);
+            content.css("border", "0.05rem solid #2b57ff");
+            error_div.css("display", "none");
+            save_btn.prop("disabled", false);
             $.ajax({
                 type: "POST",
                 url: "/api/youtube",
                 data: {"video": imgUrl},
                 success: function (data) {
                     let info = JSON.parse(data);
-                    $("#article-content").css("border", "0.05rem solid #2b57ff");
-                    $("#error-url").css("display", "block")
+                    content.css("border", "0.05rem solid #2b57ff");
+                    error_div.css("display", "block")
                         .css("color", "black")
                         .css("font-size", "0.85rem")
                         .css("font-family", "Arial")
@@ -119,42 +125,43 @@ $('#article-content').on("keyup", function () {
                 }
             });
         }
-
     } else {
         if (imgUrl === '') {
-            $("#article-content").css("border", "0.5pt solid #2b57ff");
-            $("#saveArticle").prop("disabled", false);
-            $("#error-url").css("display", "none").text('');
+            content.css("border", "0.5pt solid #2b57ff");
+            save_btn.prop("disabled", false);
+            error_div.css("display", "none").text('');
             $("#file-input").prop("disabled", false);
             $("#image-url").html('').prop("disabled", false);
         } else {
-            $("#article-content").css("border", "0.5pt solid red");
-            $("#saveArticle").prop("disabled", true);
-            $("#error-url").css("display", "block").text("Некорректный URL");
+            content.css("border", "0.5pt solid red");
+            save_btn.prop("disabled", true);
+            error_div.css("display", "block").text("Некорректный URL");
         }
     }
 });
 
-$('#saveArticle').on("click", function () {
+save_btn.on("click", function () {
+        let text_error = $("#text-input-error");
+        let title_error = $("#title-input-error");
         let title = $("#new-article-title");
         let text = $("#new-article-text");
         if ((/[^\s]/gim.test(title.val())) && (title.val().length >= 10)) {
             title.css("border", "0.05rem solid #2b57ff");
-            $("#title-input-error").text('').css("display", "none");
+            title_error.text('').css("display", "none");
             event.stopPropagation();
             if ((/[^\s]/gim.test(text.val())) && (text.val().length >= 50)) {
                 text.css("border", "0.05rem solid #2b57ff");
-                $("#text-input-error").text('').css("display", "none");
+                text_error.text('').css("display", "none");
                 event.stopPropagation();
             } else {
                 text.css("border", "0.5pt solid red");
-                $("#text-input-error").text("Поле должно содержать минимум 50 символов")
+                text_error.text("Поле должно содержать минимум 50 символов")
                     .css("display", "block").css("margin-top", "15px");
                 event.preventDefault();
             }
         } else {
             title.css("border", "0.5pt solid red");
-            $("#title-input-error").text("Поле должно содержать минимум 10 символов")
+            title_error.text("Поле должно содержать минимум 10 символов")
                 .css("display", "block").css("margin-top", "15px");
             event.preventDefault();
         }

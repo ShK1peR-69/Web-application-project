@@ -3,23 +3,26 @@
   * Check e-mail with DB users
   */
 
-$('#mail_input').change(function () {
+let email = $('#mail_input');
+let btn = $('.registration-block-button');
+let error_block = $(".mail-error");
+
+email.change(function () {
     event.preventDefault();
-    let email = $('#mail_input').val();
     $.ajax({
         type: "POST",
         url: "/check-mail",
-        data: {"email": email},
+        data: {"email": email.val()},
         success: function (data) {
-            if (data == 'ok') {
-                $('.registration-block-button').removeProp('disabled');
-                $('#mail_input').css('border', '0.05rem solid green');
-                $(".mail-error").html("");
+            if (data === 'ok') {
+                btn.removeProp('disabled');
+                email.css('border', '0.05rem solid green');
+                error_block.html("");
             }
-            if (data == 'error') {
-                $(".mail-error").html("E-mail занят другим пользователем").css("display", "block");
-                $('#mail_input').css('border', '0.05rem solid red');
-                $('.registration-block-button').prop('disabled', true);
+            if (data === 'error') {
+                error_block.html("E-mail занят другим пользователем").css("display", "block");
+                email.css('border', '0.05rem solid red');
+                btn.prop('disabled', true);
             }
         },
         error: function () {
