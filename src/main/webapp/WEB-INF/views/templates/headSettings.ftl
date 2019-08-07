@@ -9,5 +9,6 @@
     <script type="text/javascript" src="../../resources/js/upButton.js"></script>
     <script type="text/javascript" src="../../resources/js/infoWindows.js"></script>
     <script type="text/javascript" src="../../resources/js/resize.js"></script>
+    <script type="text/javascript" src="../../resources/js/animation.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 </head>
