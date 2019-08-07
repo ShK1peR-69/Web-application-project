@@ -9,6 +9,7 @@ body {
     justify-content: center;
     background: url("../images/back.gif");
     font-family: Georgia, serif;
+    overflow-x: scroll;
 }
 
 header {
@@ -30,19 +31,19 @@ header a:hover {
 }
 
 .mainpage {
+    position: center;
     background-color: rgb(244, 244, 244);
     box-shadow: 0 0 10px 5px rgba(25, 25, 25, 0.71);
     width: 1200px;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .main-hr {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 60px;
+    height: 90px;
     width: 1200px;
-    overflow-x: hidden;
     background-color: black;
     border-bottom: 2px solid white;
     border-top: 2px solid white;
@@ -55,12 +56,13 @@ header a:hover {
     height: 20px;
     background-color: black;
     width: 1200px;
-    border-bottom: 2px solid white;
 }
 
 .main-hr img {
-    height: 32px;
-    width: 50px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 10px red;
+    height: 44px;
+    width: 260px;
 }
 
 .main-header {
@@ -179,6 +181,7 @@ header a:hover {
     justify-content: flex-start;
     background-color: black;
     width: 200px;
+    border-top: 2px solid white;
 }
 
 .list-group-item-action {
@@ -576,6 +579,7 @@ footer {
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    padding-top: 15px;
 }
 
 .article-header {

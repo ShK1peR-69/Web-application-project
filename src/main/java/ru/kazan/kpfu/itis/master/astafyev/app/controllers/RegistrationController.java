@@ -48,7 +48,7 @@ public class RegistrationController {
                                       ModelMap model) {
         HttpSession session = request.getSession();
         if (!first_pass.equals(second_pass)) {
-            model.put("error_msg", "пароли не совпадают");
+            model.put("error_msg", "РїР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚");
             return "registration";
         }
         first_pass = methods.hashPass(first_pass);

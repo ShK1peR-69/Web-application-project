@@ -42,7 +42,6 @@ public class ProfileController {
                 .getContext().getAuthentication().getPrincipal();
         HttpSession session = request.getSession();
         session.setAttribute("user", user.getUser());
-        session.setAttribute("user", user.getUser());
         session.setAttribute("articles", articleService.getArticlesByAuthor(user.getUser()));
         return "profile";
     }

@@ -26,7 +26,7 @@ public class MainPageController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String renderMainPage(@RequestParam("login") String error) {
+    public String renderMainPage(@RequestParam(value = "login", required = false) String error) {
         if (error != null) {
             request.setAttribute("login", "failed");
         }
