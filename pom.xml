@@ -27,7 +27,7 @@
 
     <properties>
         <spring-version>4.3.17.RELEASE</spring-version>
-        <hibernate-version>4.0.1.Final</hibernate-version>
+        <hibernate-version>5.4.24.Final</hibernate-version>
         <spring-security-version>3.2.8.RELEASE</spring-security-version>
     </properties>
 
